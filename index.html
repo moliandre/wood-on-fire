@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wood on Fire – American BBQ | Blumenau, SC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Rye&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ember: #E8651A;
+    --coal: #1A1008;
+    --ash: #2E1F0E;
+    --smoke: #3D2B1A;
+    --bark: #4A3520;
+    --cream: #F5EDD8;
+    --gold: #D4953A;
+    --red-hot: #C63B1E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--coal);
+    color: var(--cream);
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,101,26,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 95%, rgba(198,59,30,0.5) 0%, transparent 60%),
+      var(--coal);
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--coal));
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid rgba(212,149,58,0.5);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    margin-bottom: 2rem;
+    animation: fadeDown 1s ease forwards;
+  }
+
+  .hero-logo {
+    font-family: 'Rye', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 1;
+    color: var(--cream);
+    text-shadow: 0 0 80px rgba(232,101,26,0.6);
+    animation: fadeDown 1s 0.2s ease both;
+  }
+
+  .hero-logo span {
+    color: var(--ember);
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: rgba(245,237,216,0.7);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    animation: fadeDown 1s 0.4s ease both;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--cream);
+    max-width: 600px;
+    margin: 2rem auto;
+    line-height: 1.8;
+    font-weight: 300;
+    animation: fadeDown 1s 0.6s ease both;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 3rem;
+    background: var(--ember);
+    color: var(--coal);
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    animation: fadeDown 1s 0.8s ease both;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232,101,26,0.4);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem 5vw 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .divider-line { flex: 1; height: 1px; background: rgba(212,149,58,0.3); }
+  .divider-icon { color: var(--ember); font-size: 1.2rem; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 5vw; position: relative; z-index: 1; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-tag {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ember);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-body {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: rgba(245,237,216,0.75);
+    max-width: 700px;
+    font-weight: 300;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--ash); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid rgba(212,149,58,0.2);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--ember);
+    display: block;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.5);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .about-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bbq-circle {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, rgba(232,101,26,0.4), rgba(26,16,8,0.95));
+    border: 2px solid rgba(232,101,26,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 0 80px rgba(232,101,26,0.25);
+  }
+
+  .bbq-icon { font-size: 3.5rem; margin-bottom: 0.5rem; }
+
+  .bbq-circle p {
+    font-family: 'Rye', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  /* ── PRODUCTS ── */
+  .products { background: var(--coal); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .product-card {
+    background: var(--ash);
+    border: 1px solid rgba(212,149,58,0.15);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--ember), var(--gold));
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(232,101,26,0.2);
+  }
+
+  .product-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ember);
+    border: 1px solid rgba(232,101,26,0.4);
+    padding: 3px 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .product-desc {
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(212,149,58,0.15);
+    padding-top: 1.25rem;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .product-weight {
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── PROCESS ── */
+  .process { background: var(--smoke); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .step {
+    position: relative;
+    padding: 2rem;
+    background: rgba(0,0,0,0.25);
+    border-left: 3px solid var(--ember);
+  }
+
+  .step-num {
+    font-family: 'Rye', serif;
+    font-size: 3rem;
+    color: rgba(232,101,26,0.2);
+    line-height: 1;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-text {
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── REHEATING ── */
+  .reheat { background: var(--ash); }
+
+  .reheat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .reheat-card {
+    padding: 2rem;
+    border: 1px solid rgba(212,149,58,0.15);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .reheat-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .reheat-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(232,101,26,0.15);
+    border: 1px solid rgba(232,101,26,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .reheat-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+  }
+
+  .reheat-time {
+    font-size: 0.75rem;
+    color: var(--ember);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .reheat-steps { list-style: none; }
+
+  .reheat-steps li {
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.65);
+    padding: 0.4rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.6;
+    font-weight: 300;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .reheat-steps li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--ember);
+    font-weight: 700;
+  }
+
+  /* ── ORDER ── */
+  .order {
+    background: 
+      radial-gradient(ellipse 80% 70% at 50% 100%, rgba(232,101,26,0.2) 0%, transparent 70%),
+      var(--coal);
+    text-align: center;
+  }
+
+  .order .section-title { margin: 0 auto 1.5rem; }
+  .order .section-body { margin: 0 auto 3rem; text-align: center; }
+
+  .order-highlight {
+    background: var(--ash);
+    border: 1px solid rgba(212,149,58,0.2);
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+  }
+
+  .order-highlight strong {
+    color: var(--gold);
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: #25D366;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.3);
+  }
+
+  .whatsapp-btn:hover {
+    background: #1da851;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(37,211,102,0.4);
+  }
+
+  .whatsapp-btn svg { width: 22px; height: 22px; fill: #fff; }
+
+  .order-note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: rgba(245,237,216,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0E0905;
+    text-align: center;
+    padding: 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.3);
+    letter-spacing: 1px;
+  }
+
+  footer span { color: var(--ember); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { display: none; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stat:last-child { grid-column: span 2; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(26,16,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,149,58,0.1);
+  }
+
+  .nav-logo {
+    font-family: 'Rye', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--ember); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--ember); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Wood <span>on</span> Fire</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cardapio">Cardápio</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#pedidos">Pedidos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">American BBQ · Blumenau, SC</div>
+  <h1 class="hero-logo">Wood<br><span>on Fire</span></h1>
+  <p class="hero-sub">Autêntico Churrasco Americano</p>
+  <p class="hero-tagline">Carnes defumadas artesanalmente, com técnica americana de 12 a 15 horas de processo. Qualidade excepcional, entregue na sua porta.</p>
+  <a href="#pedidos" class="hero-cta">Fazer Encomenda</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <span class="section-tag">Nossa História</span>
+        <h2 class="section-title">Um negócio de família, nascido da paixão</h2>
+        <p class="section-body">Há dois anos mergulhei no universo da defumação a quente no estilo americano. Após dominar a técnica, eu e minha esposa decidimos transformar essa paixão em um negócio familiar — levando um autêntico BBQ americano para Blumenau com qualidade excepcional e praticidade incomparável.<br><br>Cada peça é defumada de forma <strong style="color:var(--cream)">100% natural</strong>, adquirindo aquela coloração escura característica do processo. Entregamos em porções individuais lacradas a vácuo, garantindo máxima durabilidade e sabor.</p>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-number">2+</span>
+            <span class="stat-label">Anos de estudo</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">15h</span>
+            <span class="stat-label">Por produção</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Natural</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="bbq-circle">
+          <div class="bbq-icon">🔥</div>
+          <p>Defumação<br>Artesanal<br>Americana</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="cardapio">
+  <div class="section-inner">
+    <span class="section-tag">Cardápio</span>
+    <h2 class="section-title">Nossos Cortes</h2>
+    <p class="section-body">Produção sob encomenda, uma ou duas vezes ao mês. Garanta a sua porção antes que esgote!</p>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <span class="product-badge">⭐ Clássico Texano</span>
+        <div style="display:inline-block; background:rgba(50,180,80,0.15); color:#3aaf5c; border:1px solid rgba(50,180,80,0.3); font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:3px 10px; margin-bottom:1rem; font-weight:700;">● Disponível agora</div>
+        <h3 class="product-name">Brisket ao Estilo Texano</h3>
+        <p class="product-desc">O rei do BBQ americano. Peito bovino defumado lentamente por até 15 horas, com bark crocante e interior incrivelmente macio e suculento. O sabor que define o Texas.</p>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">R$&nbsp;30</div>
+            <div class="product-weight">Porção 150g · Vácuo</div>
+          </div>
+          <a href="#pedidos" style="font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--ember); text-decoration:none; font-weight:700;">Pedir →</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-badge">🍯 Especial</span>
+        <div style="display:inline-block; background:rgba(50,180,80,0.15); color:#3aaf5c; border:1px solid rgba(50,180,80,0.3); font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:3px 10px; margin-bottom:1rem; font-weight:700;">● Disponível agora</div>
+        <h3 class="product-name">Pulled Pork com Mel e Barbecue</h3>
+        <p class="product-desc">Paleta suína desfiada após horas de defumação, finalizada com mel artesanal e molho barbecue suave. Textura impossível de resistir.</p>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">R$&nbsp;25</div>
+            <div class="product-weight">Porção 200g · Vácuo</div>
+          </div>
+          <a href="#pedidos" style="font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--ember); text-decoration:none; font-weight:700;">Pedir →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="processo">
+  <div class="section-inner">
+    <span class="section-tag">Como Fazemos</span>
+    <h2 class="section-title">O processo que faz a diferença</h2>
+    <div class="process-steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h4 class="step-title">Seleção da Carne</h4>
+        <p class="step-text">Apenas cortes nobres e selecionados, preparados com temperos e rubs artesanais para uma penetração profunda de sabor.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h4 class="step-title">12–15h de Defumação</h4>
+        <p class="step-text">Defumação a quente com lenha selecionada, 100% natural. Processo lento que transforma colágeno em sabor e macia textura.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h4 class="step-title">Embalagem a Vácuo</h4>
+        <p class="step-text">Porções individuais lacradas a vácuo (~150g), garantindo conservação máxima sem perda de sabor ou umidade.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <h4 class="step-title">Entrega</h4>
+        <p class="step-text">Pedidos até as 15h entregues ainda no dia na WEG. Combinamos também outros pontos de entrega em Blumenau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REHEATING -->
+<section class="reheat">
+  <div class="section-inner">
+    <span class="section-tag">Preparo em Casa</span>
+    <h2 class="section-title">Regeneração: simples e rápida</h2>
+    <p class="section-body">Escolha o método mais conveniente para você. Em minutos sua carne estará como recém-saída do defumador.</p>
+    <div class="reheat-grid">
+
+      <div class="reheat-card">
+        <div class="reheat-header">
+          <div class="reheat-icon-wrap">🫙</div>
+          <div>
+            <div class="reheat-name">Sous Vide</div>
+            <div class="reheat-time">⏱ 30 min · Melhor qualidade</div>
+          </div>
+        </div>
+        <ul class="reheat-steps">
+          <li>Aqueça pelo menos 2L de água até 65–70°C</li>
+          <li>Com fogo desligado, mergulhe o pacote a vácuo</li>
+          <li>Aguarde 20 min, ligue o fogo e retorne à temperatura</li>
+          <li>Após 10 min, retire e sirva imediatamente</li>
+        </ul>
+      </div>
+
+      <div class="reheat-card">
+        <div class="reheat-header">
+          <div class="reheat-icon-wrap">🚀</div>
+          <div>
+            <div class="reheat-name">Sous Vide Rápido</div>
+            <div class="reheat-time">⏱ 10 min · Prático</div>
+          </div>
+        </div>
+        <ul class="reheat-steps">
+          <li>Misture 1,5L de água fervente com 0,5L em temperatura ambiente</li>
+          <li>Temperatura resultante: 80–85°C</li>
+          <li>Mergulhe o pacote por 10 minutos</li>
+          <li>Retire e sirva imediatamente</li>
+        </ul>
+      </div>
+
+      <div class="reheat-card">
+        <div class="reheat-header">
+          <div class="reheat-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="5" width="20" height="14" rx="2" stroke="#E8651A" stroke-width="1.5"/>
+              <rect x="15" y="8" width="4" height="8" rx="1" stroke="#E8651A" stroke-width="1.2"/>
+              <circle cx="17" cy="10" r="0.8" fill="#E8651A"/>
+              <circle cx="17" cy="14" r="0.8" fill="#E8651A"/>
+              <line x1="13" y1="5" x2="13" y2="19" stroke="#E8651A" stroke-width="1.2"/>
+              <rect x="4" y="8" width="7" height="8" rx="1" stroke="rgba(232,101,26,0.45)" stroke-width="1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="reheat-name">Microondas</div>
+            <div class="reheat-time">⏱ 1,5 min · Super rápido</div>
+          </div>
+        </div>
+        <ul class="reheat-steps">
+          <li>Faça um pequeno corte no pacote para liberar o vácuo</li>
+          <li>Leve ao microondas por 1min 30s em potência média</li>
+          <li>Cubra para evitar respingos</li>
+          <li>Sirva imediatamente</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="pedidos">
+  <div class="section-inner">
+    <span class="section-tag">Encomendas</span>
+    <h2 class="section-title" style="max-width:600px; margin:0 auto 1.5rem;">Pronto para o melhor BBQ de Blumenau?</h2>
+    <p class="section-body">Entre em contato pelo WhatsApp para fazer sua encomenda. Produção limitada — garanta a sua com antecedência!</p>
+    <div class="order-highlight">
+      Pedidos até as <strong>15h</strong> → entrega ainda no dia na <strong>WEG</strong>
+    </div>
+    <br>
+    <a href="https://wa.me/5547999065123?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20encomenda%20no%20Wood%20on%20Fire%20BBQ." class="whatsapp-btn" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir pelo WhatsApp
+    </a>
+    <p class="order-note">(47) 99906-5123 · Atendimento via WhatsApp</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Wood on Fire</span> – American BBQ · Blumenau, SC<br>
+  <small style="opacity:0.5; font-size:0.7rem;">Feito com fogo lento e muito amor 🔥</small></p>
+</footer>
+
+</body>
+</html>
